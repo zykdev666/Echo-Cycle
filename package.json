@@ -1,0 +1,17 @@
+{
+  "name": "project-echocycle",
+  "version": "1.0.0",
+  "description": "> Turn everyday recycling into a rewarding community habit.\r > A web platform supporting **UN SDG 12 — Responsible Consumption and Production**.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^44.3.0"
+  }
+}
