@@ -35,7 +35,7 @@ function db(bool $withDatabase = true): PDO
 
     // Dynamic environment check for InfinityFree live server vs Localhost
     if (isset($_SERVER['HTTP_HOST']) && (str_contains($_SERVER['HTTP_HOST'], 'infinityfreeapp.com') || str_contains($_SERVER['HTTP_HOST'], 'site.je'))) {
-        $host     = '://infinityfree.com';
+        $host     = 'sql212.infinityfree.com'; // Fixed typo address here!
         $port     = '3306';
         $dbname   = 'if0_42930564_echocycle_db';
         $username = 'if0_42930564';
