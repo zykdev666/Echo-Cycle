@@ -33,9 +33,24 @@ function db(bool $withDatabase = true): PDO
         return $pdo;
     }
 
-    $dsn = sprintf('mysql:host=%s;port=%s;charset=utf8mb4', DB_HOST, DB_PORT);
+    // Dynamic environment check for InfinityFree live server vs Localhost
+    if (isset($_SERVER['HTTP_HOST']) && (str_contains($_SERVER['HTTP_HOST'], 'infinityfreeapp.com') || str_contains($_SERVER['HTTP_HOST'], 'site.je'))) {
+        $host     = '://infinityfree.com';
+        $port     = '3306';
+        $dbname   = 'if0_42930564_echocycle_db';
+        $username = 'if0_42930564';
+        $password = 'EchoCycle666';
+    } else {
+        $host     = DB_HOST;
+        $port     = DB_PORT;
+        $dbname   = DB_NAME;
+        $username = DB_USER;
+        $password = DB_PASS;
+    }
+
+    $dsn = sprintf('mysql:host=%s;port=%s;charset=utf8mb4', $host, $port);
     if ($withDatabase) {
-        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', DB_HOST, DB_PORT, DB_NAME);
+        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $host, $port, $dbname);
     }
 
     $options = [
@@ -44,7 +59,7 @@ function db(bool $withDatabase = true): PDO
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
 
-    $connection = new PDO($dsn, DB_USER, DB_PASS, $options);
+    $connection = new PDO($dsn, $username, $password, $options);
     if ($withDatabase) {
         $pdo = $connection;
     }
