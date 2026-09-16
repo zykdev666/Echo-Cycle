@@ -12,10 +12,18 @@ jobs:
     - name: Get latest code
       uses: actions/checkout@v4
 
+    # This extra step finds your local connection settings in config.php and overwrites them with your live production info before uploading
+    - name: Inject Production Database Credentials
+      run: |
+        sed -i "s/'127.0.0.1'/'${{ secrets.DB_HOST }}'/g" htdocs/config/config.php
+        sed -i "s/'root'/'${{ secrets.DB_USER }}'/g" htdocs/config/config.php
+        sed -i "s/'your_local_db_name'/'${{ secrets.DB_NAME }}'/g" htdocs/config/config.php
+        sed -i "s/''/'${{ secrets.DB_PASS }}'/g" htdocs/config/config.php
+
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: htdocs/ # Uploads directly into your InfinityFree public folder
+        server-dir: htdocs/
